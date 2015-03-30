@@ -17,8 +17,6 @@
 package spark.route;
 
 /**
- * 
- *
  * @author Per Wendel
  */
 public class RouteMatch {
@@ -27,23 +25,32 @@ public class RouteMatch {
     private Object target;
     private String matchUri;
     private String requestURI;
-    
-    public RouteMatch(HttpMethod httpMethod, Object target, String matchUri, String requestUri) {
+    private String acceptType;
+
+    public RouteMatch(HttpMethod httpMethod, Object target, String matchUri, String requestUri, String acceptType) {
         super();
         this.httpMethod = httpMethod;
         this.target = target;
         this.matchUri = matchUri;
         this.requestURI = requestUri;
+        this.acceptType = acceptType;
     }
 
-    
+
+    /**
+     * @return the accept type
+     */
+    public String getAcceptType() {
+        return acceptType;
+    }
+
     /**
      * @return the httpMethod
      */
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
-    
+
     /**
      * @return the target
      */
@@ -51,7 +58,7 @@ public class RouteMatch {
         return target;
     }
 
-    
+
     /**
      * @return the matchUri
      */
@@ -59,13 +66,13 @@ public class RouteMatch {
         return matchUri;
     }
 
-    
+
     /**
      * @return the requestUri
      */
     public String getRequestURI() {
         return requestURI;
     }
-    
-    
+
+
 }

@@ -15,6 +15,7 @@ public class Session {
 
     /**
      * Creates a session with the <code>HttpSession</code>.
+     *
      * @param session
      * @throws IllegalArgumentException If the session is null.
      */
@@ -26,7 +27,7 @@ public class Session {
     }
 
     /**
-     * Returns the raw <code>HttpSession</code> object handed in by the servlet container.
+     * @return the raw <code>HttpSession</code> object handed in by the servlet container.
      */
     public HttpSession raw() {
         return session;
@@ -34,9 +35,10 @@ public class Session {
 
     /**
      * Returns the object bound with the specified name in this session, or null if no object is bound under the name.
-     * 
-     * @param name a string specifying the name of the object 
-     * @return the object with the specified name 
+     *
+     * @param name a string specifying the name of the object
+     * @param <T>  The type parameter
+     * @return the object with the specified name
      */
     @SuppressWarnings("unchecked")
     public <T> T attribute(String name) {
@@ -45,8 +47,8 @@ public class Session {
 
     /**
      * Binds an object to this session, using the name specified.
-     * 
-     * @param name the name to which the object is bound; cannot be null
+     *
+     * @param name  the name to which the object is bound; cannot be null
      * @param value the object to be bound
      */
     public void attribute(String name, Object value) {
@@ -54,8 +56,8 @@ public class Session {
     }
 
     /**
-     * Returns an <code>Enumeration</code> of <code>String</code> objects
-     * containing the names of all the objects bound to this session. 
+     * @return an <code>Enumeration</code> of <code>String</code> objects
+     * containing the names of all the objects bound to this session.
      */
     public Set<String> attributes() {
         TreeSet<String> attributes = new TreeSet<String>();
@@ -67,22 +69,22 @@ public class Session {
     }
 
     /**
-     * Returns the time when this session was created, measured in milliseconds since midnight January 1, 1970 GMT.
+     * @return the time when this session was created, measured in milliseconds since midnight January 1, 1970 GMT.
      */
     public long creationTime() {
         return session.getCreationTime();
     }
 
     /**
-     * Returns a string containing the unique identifier assigned to this session.
+     * @return a string containing the unique identifier assigned to this session.
      */
     public String id() {
         return session.getId();
     }
 
     /**
-     * Returns the last time the client sent a request associated with this session,
-     * as the number of milliseconds since midnight January 1, 1970 GMT, and marked 
+     * @return the last time the client sent a request associated with this session,
+     * as the number of milliseconds since midnight January 1, 1970 GMT, and marked
      * by the time the container received the request.
      */
     public long lastAccessedTime() {
@@ -90,7 +92,7 @@ public class Session {
     }
 
     /**
-     * Returns the maximum time interval, in seconds, that the container 
+     * @return the maximum time interval, in seconds, that the container
      * will keep this session open between client accesses.
      */
     public int maxInactiveInterval() {
@@ -99,8 +101,8 @@ public class Session {
 
     /**
      * Specifies the time, in seconds, between client requests the web container will invalidate this session.
-     * 
-     * @param interval
+     *
+     * @param interval the interval
      */
     public void maxInactiveInterval(int interval) {
         session.setMaxInactiveInterval(interval);
@@ -114,7 +116,7 @@ public class Session {
     }
 
     /**
-     * Returns true if the client does not yet know about the session or if the client chooses not to join the session.
+     * @return true if the client does not yet know about the session or if the client chooses not to join the session.
      */
     public boolean isNew() {
         return session.isNew();
@@ -122,6 +124,7 @@ public class Session {
 
     /**
      * Removes the object bound with the specified name from this session.
+     *
      * @param name the name of the object to remove from this session
      */
     public void removeAttribute(String name) {

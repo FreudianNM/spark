@@ -24,8 +24,14 @@ class ResponseWrapper extends Response {
 
     private Response delegate;
 
+    private boolean redirected = false;
+
     public void setDelegate(Response delegate) {
         this.delegate = delegate;
+    }
+
+    Response getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -36,6 +42,11 @@ class ResponseWrapper extends Response {
     @Override
     public void body(String body) {
         delegate.body(body);
+    }
+
+    @Override
+    public String body() {
+        return delegate.body();
     }
 
     @Override
@@ -55,12 +66,21 @@ class ResponseWrapper extends Response {
 
     @Override
     public void redirect(String location) {
+        redirected = true;
         delegate.redirect(location);
     }
 
     @Override
     public void redirect(String location, int httpStatusCode) {
+        redirected = true;
         delegate.redirect(location, httpStatusCode);
+    }
+
+    /**
+     * @return true if redirected has been done
+     */
+    boolean isRedirected() {
+        return redirected;
     }
 
     @Override
@@ -91,6 +111,11 @@ class ResponseWrapper extends Response {
     @Override
     public void cookie(String name, String value, int maxAge, boolean secured) {
         delegate.cookie(name, value, maxAge, secured);
+    }
+
+    @Override
+    public void cookie(String path, String name, String value, int maxAge, boolean secured) {
+        delegate.cookie(path, name, value, maxAge, secured);
     }
 
     @Override

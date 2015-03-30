@@ -16,29 +16,25 @@
  */
 package spark.examples.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static spark.Spark.after;
 import static spark.Spark.before;
-import spark.Filter;
-import spark.Request;
-import spark.Response;
 
 
 public class DummyFilter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DummyFilter.class);
+
     public static void main(String[] args) {
-        before(new Filter() {
-            @Override
-            public void handle(Request request, Response response) {
-                System.out.println("Before");
-            }
+        before((request, response) -> {
+            LOGGER.info("Before");
         });
-        
-        after(new Filter() {
-            @Override
-            public void handle(Request request, Response response) {
-                System.out.println("After");
-            }
+
+        after((request, response) -> {
+            LOGGER.info("After");
         });
     }
-    
+
 }

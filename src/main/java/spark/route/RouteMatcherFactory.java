@@ -23,14 +23,17 @@ package spark.route;
  * @author Per Wendel
  */
 public final class RouteMatcherFactory {
-    /** The logger. */
+    /**
+     * The logger.
+     */
     private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(RouteMatcherFactory.class);
 
-    private static RouteMatcher routeMatcher = null;
+    private static SimpleRouteMatcher routeMatcher = null;
 
-    private RouteMatcherFactory() {}
-    
-    public static synchronized RouteMatcher get() {
+    private RouteMatcherFactory() {
+    }
+
+    public static synchronized SimpleRouteMatcher get() {
         if (routeMatcher == null) {
             LOG.debug("creates RouteMatcher");
             routeMatcher = new SimpleRouteMatcher();

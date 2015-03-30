@@ -1,6 +1,6 @@
 package spark;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,8 +32,11 @@ import spark.route.HttpMethod;
 import spark.route.RouteMatch;
 
 public class RequestTest {
+
+    private static final String THE_SERVLET_PATH = "/the/servlet/path";
+    private static final String THE_CONTEXT_PATH = "/the/context/path";
     
-    RouteMatch match =  new RouteMatch(HttpMethod.get,null,"/hi","/hi"); 
+    RouteMatch match =  new RouteMatch(HttpMethod.get,null,"/hi","/hi", "text/html");
 
     @Test
     public void queryParamShouldReturnsParametersFromQueryString() {
@@ -53,6 +56,30 @@ public class RequestTest {
         Request request = new Request(match,servletRequest);
         String name = request.queryMap("user").value("name");
         assertEquals("Invalid name in query string","Federico",name);
+    }
+
+    @Test
+    public void shouldBeAbleToGetTheServletPath() {
+        HttpServletRequest servletRequest = new MockedHttpServletRequest(new HashMap<String, String[]>()) {
+            @Override
+            public String getServletPath() {
+                return THE_SERVLET_PATH;
+            }
+        };
+        Request request = new Request(match, servletRequest);
+        assertEquals("Should have delegated getting the servlet path", THE_SERVLET_PATH, request.servletPath());
+    }
+    
+    @Test
+    public void shouldBeAbleToGetTheContextPath() {
+        HttpServletRequest servletRequest = new MockedHttpServletRequest(new HashMap<String, String[]>()) {
+            @Override
+            public String getContextPath() {
+                return THE_CONTEXT_PATH;
+            }
+        };
+        Request request = new Request(match, servletRequest);
+        assertEquals("Should have delegated getting the context path", THE_CONTEXT_PATH, request.contextPath());
     }
     
     public static class MockedHttpServletRequest implements HttpServletRequest {
@@ -173,6 +200,7 @@ public class RequestTest {
         }
 
         @Override
+        @Deprecated
         public boolean isRequestedSessionIdFromUrl() {
             return false;
         }
@@ -273,6 +301,7 @@ public class RequestTest {
         }
 
         @Override
+        @Deprecated
         public String getRealPath(String path) {
             return null;
         }
